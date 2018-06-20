@@ -1,8 +1,16 @@
 const Discord = require('discord.js');
 const client = new Discord.Client();
 const {prefix,token} = require('./config.json');
+// TODO ALEC: You should be able to just use const snekfetch = require('snekfetch'); instead of listing the node_modules path //
 const snekfetch = require('./node_modules/discord.js/node_modules/snekfetch');
 
+/*
+    ALEC OVERALL FEDBACK
+    - Awesome job this is a sweet bot!
+    - I try to keep my index.js file as readable as possible with descriptitve helper methods. This will lead you to writing
+    much more modular code and will be much easier to pinpoint errors :)
+    - Another file you might consider using for sensitive keys/prefixes/etc, is a .env file!
+*/
 
 //Log to the console to know the bot is online
 client.on('ready', () => {
@@ -55,6 +63,11 @@ client.on('message', async message => {
     m.edit(`Pong! Latency is ${m.createdTimestamp - message.createdTimestamp}ms. API Latency is ${Math.round(client.ping)}ms`);
   }
 
+  /* 
+    TODO ALEC: For this entire section while checking for commands like this works, you could even break each of these out into
+    separate files that could be loaded in at the top of this file. Essentially, it could be a config file that runs the logic
+    from each file when its fed a command.
+  */
   if(command === 'match') {
     const {body} = await snekfetch.get(`https://api.opendota.com/api/matches/${args[0]}`);
     const durMinutes = Math.floor(body.duration / 60);
@@ -68,7 +81,8 @@ client.on('message', async message => {
     }
      
     if(body.radiant_win === false){
-
+      
+      // TODO ALEC: I would probably break this out to a helper method or even another file handler that handles created of any "rich" content //
       const embed = new Discord.RichEmbed()
         .setColor('#ff0000')
         .setTitle(`Match: ${body.match_id}`)
@@ -116,6 +130,7 @@ client.on('message', async message => {
       return message.channel.send(`No player found with the name: ${args[0]}! Please make sure you entered the right name!`);
     }
 
+    // TODO ALEC: Again, I would probably break this out into another helper and/or file for readability //
     for(var i = 0; i < 5; i++){
       const winner = (matches[i].radiant_win)?"Radiant":"Dire";
       const color = (matches[i].radiant_win)?"#33cc33":"#ff0000";
