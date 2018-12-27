@@ -52,7 +52,7 @@ client.on('message', async message => {
   if (command === "ping") {
 
     const m = await message.channel.send("Ping?");
-    m.edit(`Pong! Latency is ${m.createdTimestamp - message.createdTimestamp}ms. API Latency is ${Math.round(client.ping)}ms/ Args: ${args[0]}, ${args[1]}, ${args[2]}`);
+    m.edit(`Pong! Latency is ${m.createdTimestamp - message.createdTimestamp}ms. API Latency is ${Math.round(client.ping)}ms.`);
   }
 
   if (command === 'match') {
@@ -149,7 +149,14 @@ client.on('message', async message => {
       return message.channel.send(`No player found with the name: ${args[0]}! Please make sure you entered the right name!`);
     }
 
-    for (var i = 0; i < 5; i++) {
+    var reqMatches;
+    if (args[1]) {
+      reqMatches = args[1];
+    }else{
+      reqMatches = 5;
+    }
+
+    for (var i = 0; i < reqMatches; i++) {
       const winner = matchJson[i].radiant_win ? "Radiant" : "Dire";
       const matchid = matchJson[i].match_id;
       const heroID = matchJson[i].hero_id;
