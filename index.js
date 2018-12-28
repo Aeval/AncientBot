@@ -153,7 +153,7 @@ client.on('message', async message => {
     if (args[1]) {
       reqMatches = args[1];
     }else{
-      reqMatches = 5;
+      reqMatches = 3;
     }
 
     for (var i = 0; i < reqMatches; i++) {
