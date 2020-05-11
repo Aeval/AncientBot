@@ -77,7 +77,7 @@ client.on('message', async message => {
   }
 
   if (command === 'guildlist') {
-    const guildNum = client.guilds.cache.size;
+    const guildNum = client.guilds.size;
     return message.channel.send(`I exist in ${guildNum} different servers right now!`);
   }
 
