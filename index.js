@@ -1,6 +1,9 @@
 const Discord = require('discord.js');
 const client = new Discord.Client();
-const { prefix, token } = require('./config.json');
+const {
+  prefix,
+  token
+} = require('./config.json');
 const snekfetch = require('./node_modules/discord.js/node_modules/snekfetch');
 
 
@@ -9,31 +12,49 @@ client.on('ready', () => {
   console.log('Ready!');
   let num = Math.floor(Math.random() * 9);
   if (num === 1) {
-    client.user.setActivity('for last hits', { type: 'WATCHING' });
+    client.user.setActivity('for last hits', {
+      type: 'WATCHING'
+    });
   }
   if (num === 2) {
-    client.user.setActivity('Kevin Godec', { type: 'LISTENING' });
+    client.user.setActivity('Kevin Godec', {
+      type: 'LISTENING'
+    });
   }
   if (num === 3) {
-    client.user.setActivity('your last match', { type: 'WATCHING' });
+    client.user.setActivity('your last match', {
+      type: 'WATCHING'
+    });
   }
   if (num === 4) {
-    client.user.setActivity('bad callouts', { type: 'LISTENING' });
+    client.user.setActivity('bad callouts', {
+      type: 'LISTENING'
+    });
   }
   if (num === 5) {
-    client.user.setActivity('for ward placement', { type: 'WATCHING' });
+    client.user.setActivity('for ward placement', {
+      type: 'WATCHING'
+    });
   }
   if (num === 6) {
-    client.user.setActivity('you take high ground', { type: 'WATCHING' });
+    client.user.setActivity('you take high ground', {
+      type: 'WATCHING'
+    });
   }
   if (num === 7) {
-    client.user.setActivity('the runes', { type: 'WATCHING' });
+    client.user.setActivity('the runes', {
+      type: 'WATCHING'
+    });
   }
   if (num === 8) {
-    client.user.setActivity('you respawn...again', { type: 'WATCHING' });
+    client.user.setActivity('you respawn...again', {
+      type: 'WATCHING'
+    });
   }
   if (num === 0) {
-    client.user.setActivity('your draft picks', { type: 'WATCHING' });
+    client.user.setActivity('your draft picks', {
+      type: 'WATCHING'
+    });
   }
 });
 
@@ -55,8 +76,16 @@ client.on('message', async message => {
     m.edit(`Pong! Latency is ${m.createdTimestamp - message.createdTimestamp}ms. API Latency is ${Math.round(client.ping)}ms.`);
   }
 
+  if (command === 'guildlist') {
+    const guildNum = client.guilds.size;
+    return message.channel.send(`I exist in ${guildNum} different servers right now!`);
+  }
+
   if (command === 'match') {
-    const { body } = await snekfetch.get(`https://api.opendota.com/api/matches/${args[0]}`);
+    const {
+      body
+    } = await snekfetch.get(`
+          https: //api.opendota.com/api/matches/${args[0]}`);
     const durMinutes = Math.floor(body.duration / 60);
     const durSeconds = body.duration - durMinutes * 60;
     const fbMin = Math.floor(body.first_blood_time / 60);
@@ -152,7 +181,7 @@ client.on('message', async message => {
     var reqMatches;
     if (args[1]) {
       reqMatches = args[1];
-    }else{
+    } else {
       reqMatches = 3;
     }
 
@@ -185,7 +214,7 @@ client.on('message', async message => {
 
       switch (matchJson[i].lane_role) {
         default:
-          role = "No Lane";
+          role = "Not Specified";
           break;
         case 1:
           role = "Safe";
